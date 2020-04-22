@@ -10,4 +10,4 @@ run: 3
 	export LD_LIBRARY_PATH=/mnt/d/LABOLATORIA/ProgramyC++/SFML-2.5.1/lib && ./sfml-app
 
 clean:
-	rm -rf *.o
+	rm -rf *.o sfml-app

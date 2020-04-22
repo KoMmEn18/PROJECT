@@ -11,6 +11,11 @@ class ActualGame : public State
     
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+        static void gameBackground();
+    
+    protected:
+        inline static sf::Texture textureBackground;
+        inline static sf::Sprite spriteBackground;
 
 };
 

@@ -15,7 +15,7 @@ void InfoScreen::setInfoScreen()
 
 void InfoScreen::infoScreenBackground()
 {
-    if(!textureBackground.loadFromFile("Sources/img/info.jpg", sf::IntRect(600, 200,1920,1080)))
+    if(!textureBackground.loadFromFile("Sources/img/menu.jpg", sf::IntRect(600, 200,1920,1080)))
     {
         exit(EXIT_FAILURE);
     }
@@ -32,8 +32,8 @@ void InfoScreen::setOptionText()
     option.setCharacterSize(40);
     option.setFillColor(sf::Color::White);
     option.setOutlineColor(sf::Color::Black);
-    option.setOrigin(279.5, 20.5);
-    option.setPosition(WINDOW_WIDTH/2, 480);
+    option.setOrigin(251.5, 20.5);
+    option.setPosition(WINDOW_WIDTH/2, 640);
 }
 
 void InfoScreen::setFont(const char *name)

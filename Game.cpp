@@ -17,6 +17,7 @@ void Game::start()
         MainMenu::setMenu();
 
     InfoScreen::setInfoScreen();
+    ActualGame::setActualGame();
 
     while(running)
     {
