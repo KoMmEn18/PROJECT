@@ -12,10 +12,13 @@ class ActualGame : public State
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
         static void gameBackground();
-    
+        static void setBall();
+        static sf::CircleShape ballMaker();
+
     protected:
         inline static sf::Texture textureBackground;
         inline static sf::Sprite spriteBackground;
+        inline static sf::CircleShape ball = ballMaker();
 
 };
 
