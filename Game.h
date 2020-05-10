@@ -5,7 +5,7 @@
 #include "InfoScreen.h"
 #include "ActualGame.h"
 
-class Game : public MainMenu
+class Game : public State
 {
     public:
         static void start();

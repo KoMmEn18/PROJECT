@@ -10,7 +10,7 @@ class MainMenu : public State
         static void setMenu();
         static void moveUp();
         static void moveDown();
-        
+        inline static int selectedItemIndex;
 
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -27,7 +27,6 @@ class MainMenu : public State
         inline static sf::Font font;
         inline static sf::Text welcomeMessage;
         inline static sf::Text options[NUMBER_OF_ITEMS_MENU];
-        inline static int selectedItemIndex;
 };
 
 #endif
