@@ -12,11 +12,21 @@ class ActualGame : public State
         static void player1move(sf::Vector2f howmany);
         static void player2move(sf::Vector2f howmany);
 
+        static void ballUpdate();
+
+        static int didCollided();
+
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-        static void gamePlayerSet();
-
+        static void playerSet();
+        static void ballSet();
+        static float ballLeft();
+        static float ballRight();
+        static float ballTop();
+        static float ballBottom();
         static void gameBackground();
+        inline static float ballVelocity = 3.0f;
+        inline static sf::Vector2f velocity{ballVelocity, ballVelocity};
 
     protected:
         inline static sf::Texture textureBackground;
@@ -27,6 +37,9 @@ class ActualGame : public State
 
         inline static sf::Texture player2Texture;
         inline static sf::Sprite player2Sprite;
+
+        inline static sf::Texture ballTexture;
+        inline static sf::Sprite ballSprite;
 };
 
 #endif

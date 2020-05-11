@@ -79,36 +79,43 @@ void Game::start()
             }
         }
 
-        sf::Time frameTime{ clock.restart() };
-		float dt1{ frameTime.asSeconds() };
-		float dt2{ frameTime.asSeconds() };
-        sf::Vector2i movementControlplayer1;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-			--movementControlplayer1.y;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-			++movementControlplayer1.y;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			--movementControlplayer1.x;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			++movementControlplayer1.x;
-		sf::Vector2f movement1(movementControlplayer1);
-		if (movementControlplayer1.x != 0 && movementControlplayer1.y != 0)
-		    movement1 *= 0.707f;
-        ActualGame::player1move(movement1 * dt1);
+        if(_gameState == Game::Playing)
+        {
+            while(!ActualGame::didCollided());
+            sf::Time frameTime{ clock.restart() };
 
-        sf::Vector2i movementControlplayer2;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-			--movementControlplayer2.y;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			++movementControlplayer2.y;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-			--movementControlplayer2.x;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-			++movementControlplayer2.x;
-        sf::Vector2f movement2(movementControlplayer2);
-        if (movementControlplayer2.x != 0 && movementControlplayer2.y != 0)
-		    movement2 *= 0.707f;
-        ActualGame::player2move(movement2 * dt2);
+            float dt1{ frameTime.asSeconds() };
+            sf::Vector2i movementControlplayer1;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+                --movementControlplayer1.y;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+                ++movementControlplayer1.y;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+                --movementControlplayer1.x;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+                ++movementControlplayer1.x;
+            sf::Vector2f movement1(movementControlplayer1);
+            if (movementControlplayer1.x != 0 && movementControlplayer1.y != 0)
+                movement1 *= 0.707f;
+            ActualGame::player1move(movement1 * dt1);
+
+            float dt2{ frameTime.asSeconds() };
+            sf::Vector2i movementControlplayer2;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+                --movementControlplayer2.y;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+                ++movementControlplayer2.y;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+                --movementControlplayer2.x;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+                ++movementControlplayer2.x;
+            sf::Vector2f movement2(movementControlplayer2);
+            if (movementControlplayer2.x != 0 && movementControlplayer2.y != 0)
+                movement2 *= 0.707f;
+            ActualGame::player2move(movement2 * dt2);
+
+            ActualGame::ballUpdate();
+        }
 
         window.clear(sf::Color::Black);
         window.draw(*m_currentState);
