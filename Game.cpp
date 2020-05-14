@@ -81,10 +81,6 @@ void Game::start()
         {
             ActualGame::playerUpdate();
             ActualGame::ballUpdate();
-            if(ActualGame::didBallAndPlayer1Collided())
-                std::cout << "tak" << std::endl;
-            if(ActualGame::didBallAndPlayer2Collided())
-                std::cout << "tak2" << std::endl;
         }
 
         window.clear(sf::Color::Black);

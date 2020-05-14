@@ -16,14 +16,12 @@ class ActualGame : public State
         static void ballUpdate();
         static void playerUpdate();
 
-        static bool didPlayersCollided();
-        static bool didBallAndPlayer1Collided();
-        static bool didBallAndPlayer2Collided();
+        static bool didCollided(Ball* first, Ball* second);
 
-        static bool canMove();
-        static bool canMove2();
-        static bool canMove3();
-        static bool canMove4();
+        static bool canMove(Ball* first, Ball* second);
+        static bool canMove2(Ball* first, Ball* second);
+        static bool canMove3(Ball* first, Ball* second);
+        static bool canMove4(Ball* first, Ball* second);
 
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

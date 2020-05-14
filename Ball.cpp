@@ -2,11 +2,10 @@
 
 Ball::Ball(sf::Color kolor, float x, float y, float radius)
 {
-    this->ballRadius = radius;
-    circle.setPosition(x, y);
-    circle.setRadius(ballRadius);
+    circle.setRadius(radius);
     circle.setFillColor(kolor);
-    circle.setOrigin(ballRadius, ballRadius);
+    circle.setOrigin(radius, radius);
+    circle.setPosition(x, y);
     circle.setPointCount(200);
 }
 
