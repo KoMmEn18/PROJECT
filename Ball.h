@@ -10,14 +10,20 @@ class Ball : public State
         Ball(sf::Color kolor, float x, float y, float radius);
         ~Ball() = default;
         void update(sf::Vector2f howmany);
-        sf::CircleShape circle;
 
         float left();
         float right();
         float top();
         float bottom();
 
+        float getPositionX();
+        float getPositionY();
+        float getRadius();
+
+        void setBallPosition(float x, float y);
+
     private:
+        sf::CircleShape circle;
         float ballRadius;
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

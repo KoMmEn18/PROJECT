@@ -19,7 +19,6 @@ void Ball::update(sf::Vector2f howmany)
     circle.move(howmany);
 }
 
-
 float Ball::left()
 {
     return circle.getPosition().x - circle.getRadius();
@@ -38,4 +37,24 @@ float Ball::top()
 float Ball::bottom()
 {
     return circle.getPosition().y + circle.getRadius();
+}
+
+float Ball::getPositionX()
+{
+    return circle.getPosition().x;
+}
+
+float Ball::getPositionY()
+{
+    return circle.getPosition().y;
+}
+
+float Ball::getRadius()
+{
+    return circle.getRadius();
+}
+
+void Ball::setBallPosition(float x, float y)
+{
+    circle.setPosition(x,y);
 }

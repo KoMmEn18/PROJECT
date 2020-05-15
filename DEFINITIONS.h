@@ -4,6 +4,6 @@
 #define WINDOW_WIDTH 560
 #define WINDOW_HEIGHT 840
 #define NUMBER_OF_ITEMS_MENU 3
-#define SPEED 3.0f
+#define SPEED 5.0f
 
 #endif

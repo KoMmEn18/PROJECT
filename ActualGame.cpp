@@ -1,6 +1,7 @@
 #include "ActualGame.h"
 #include <iostream>
 #include <cmath>
+#include <unistd.h>
 
 void ActualGame::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
@@ -8,10 +9,6 @@ void ActualGame::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(*ball);
     target.draw(*player1);
     target.draw(*player2);
-    if(didCollided(player1, ball))
-    {
-        printf("ta no\n");
-    }
 }
 
 void ActualGame::playerUpdate()
@@ -47,14 +44,11 @@ void ActualGame::playerUpdate()
 
 bool ActualGame::didCollided(Ball* first, Ball* second)
 {
-    sf::FloatRect shape1 = first->circle.getGlobalBounds();
-	sf::FloatRect shape2 = second->circle.getGlobalBounds();
-
-	float dx = (first->circle.getPosition().x) - (second->circle.getPosition().x);
-	float dy = (first->circle.getPosition().y) - (second->circle.getPosition().y);
+	float dx = (first->getPositionX()) - (second->getPositionX());
+	float dy = (first->getPositionY()) - (second->getPositionY());
 	float distance = std::sqrt((dx * dx) + (dy * dy));
 
-	if (distance < first->circle.getRadius() + second->circle.getRadius())
+	if (distance < first->getRadius() + second->getRadius())
 	{
 		return true;
 	}
@@ -64,7 +58,7 @@ bool ActualGame::didCollided(Ball* first, Ball* second)
 
 bool ActualGame::canMove(Ball* first, Ball* second)
 {
-    if(didCollided(first, second) && (first->circle.getPosition().y > second->circle.getPosition().y))
+    if(didCollided(first, second) && (first->getPositionY() > second->getPositionY()))
         return false;
 
     return true;
@@ -72,7 +66,7 @@ bool ActualGame::canMove(Ball* first, Ball* second)
 
 bool ActualGame::canMove2(Ball* first, Ball* second)
 {
-    if(didCollided(first, second) && (first->circle.getPosition().y < second->circle.getPosition().y))
+    if(didCollided(first, second) && (first->getPositionY() < second->getPositionY()))
         return false;
 
     return true;
@@ -80,7 +74,7 @@ bool ActualGame::canMove2(Ball* first, Ball* second)
 
 bool ActualGame::canMove3(Ball* first, Ball* second)
 {
-    if(didCollided(first, second) && (first->circle.getPosition().x < second->circle.getPosition().x))
+    if(didCollided(first, second) && (first->getPositionX() < second->getPositionX()))
         return false;
 
     return true;
@@ -88,7 +82,7 @@ bool ActualGame::canMove3(Ball* first, Ball* second)
 
 bool ActualGame::canMove4(Ball* first, Ball* second)
 {
-    if(didCollided(first, second) && (first->circle.getPosition().x > second->circle.getPosition().x))
+    if(didCollided(first, second) && (first->getPositionX() > second->getPositionX()))
         return false;
 
     return true;
@@ -101,8 +95,8 @@ void ActualGame::setActualGame()
 
 void ActualGame::ballUpdate()
 {
-    //ball->update(velocity);
-
+    ball->update(velocity);
+    
     if(ball->left() < 5)
     {
         velocity.x = ballVelocity;
@@ -111,15 +105,103 @@ void ActualGame::ballUpdate()
     {
         velocity.x = -ballVelocity;
     }
-    else if(ball->top() < 5)
+    else if(ball->top() < 5 && (ball->getPositionX() < 165 || ball->getPositionX() > 395))
     {
         velocity.y = ballVelocity;
     }
-    else if(ball->bottom() > WINDOW_HEIGHT-5)
+    else if(ball->bottom() > WINDOW_HEIGHT-5 && (ball->getPositionX() < 165 || ball->getPositionX() > 395))
     {
         velocity.y = -ballVelocity;
     }
 
+    if(ball->getPositionY() + ball->getRadius() + 1 < 0)
+    {
+        std::cout << "Player 2 Goal" << std::endl;
+        player2Score++;
+        sleep(1);
+        setAfterPlayer2Scores();
+    }
+    if(ball->getPositionY() - ball->getRadius() - 1 > WINDOW_HEIGHT)
+    {
+        std::cout << "Player 1 Goal" << std::endl;
+        player1Score++;
+        sleep(1);
+        setAfterPlayer1Scores();
+    }
+
+    ballCollision();
+}
+
+void ActualGame::setAfterPlayer1Scores()
+{
+    player1->setBallPosition(WINDOW_WIDTH/2,40);
+    player2->setBallPosition(WINDOW_WIDTH/2,WINDOW_HEIGHT-40);
+    ball->setBallPosition(WINDOW_WIDTH/2, WINDOW_HEIGHT/2 + 260);
+    velocity.x = 0.0f;
+    velocity.y = 0.0f;
+    sleep(1);
+}
+
+void ActualGame::setAfterPlayer2Scores()
+{
+    player1->setBallPosition(WINDOW_WIDTH/2,40);
+    player2->setBallPosition(WINDOW_WIDTH/2,WINDOW_HEIGHT-40);
+    ball->setBallPosition(WINDOW_WIDTH/2, WINDOW_HEIGHT/2 - 260);
+    velocity.x = 0.0f;
+    velocity.y = 0.0f;
+    sleep(1);
+}
+
+void ActualGame::ballCollision()
+{
+    if(didCollided(ball, player1) && didCollided(ball, player2))
+    {
+        velocity.x = 0.0f;
+        velocity.y = 0.0f;
+    } 
+    else if(didCollided(ball, player1))
+    {
+        ballVelocity = 4.0f;
+
+        if(ball->getPositionY() > player1->getPositionY())
+        {
+            velocity.y = ballVelocity;
+        }
+        if(ball->getPositionY() < player1->getPositionY())
+        {
+            velocity.y = -ballVelocity;
+        }
+        if(ball->getPositionX() < player1->getPositionX())
+        {
+            velocity.x = -ballVelocity;
+        }
+        if(ball->getPositionX() > player1->getPositionX())
+        {
+            velocity.x = ballVelocity;
+        }
+    }
+
+    else if(didCollided(ball, player2))
+    {
+        ballVelocity = 4.0f;
+
+        if(ball->getPositionY() > player2->getPositionY())
+        {
+            velocity.y = ballVelocity;
+        }
+        if(ball->getPositionY() < player2->getPositionY())
+        {
+            velocity.y = -ballVelocity;
+        }
+        if(ball->getPositionX() < player2->getPositionX())
+        {
+            velocity.x = -ballVelocity;
+        }
+        if(ball->getPositionX() > player2->getPositionX())
+        {
+            velocity.x = ballVelocity;
+        }
+    }
 }
 
 void ActualGame::player1move(sf::Vector2f howmany)

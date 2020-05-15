@@ -16,24 +16,22 @@ class ActualGame : public State
         static void ballUpdate();
         static void playerUpdate();
 
+    private:
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+        static void gameBackground();
+
         static bool didCollided(Ball* first, Ball* second);
+        static void ballCollision();
 
         static bool canMove(Ball* first, Ball* second);
         static bool canMove2(Ball* first, Ball* second);
         static bool canMove3(Ball* first, Ball* second);
         static bool canMove4(Ball* first, Ball* second);
 
-    private:
-        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-        static void playerSet();
-        static void ballSet();
-        static float ballLeft();
-        static float ballRight();
-        static float ballTop();
-        static float ballBottom();
-        static void gameBackground();
+        static void setAfterPlayer1Scores();
+        static void setAfterPlayer2Scores();
 
-        inline static float ballVelocity = 3.0f;
+        inline static float ballVelocity = 0.0f;
         inline static sf::Vector2f velocity{ballVelocity, ballVelocity};
 
         inline static Ball* player1 = new Ball(sf::Color::Red, WINDOW_WIDTH/2,40, 25.0);
@@ -41,9 +39,11 @@ class ActualGame : public State
 
         inline static Ball* ball = new Ball(sf::Color::Green, WINDOW_WIDTH/2,WINDOW_HEIGHT/2, 15.0);
 
-    protected:
         inline static sf::Texture textureBackground;
         inline static sf::Sprite spriteBackground;
+
+        inline static int player1Score = 0;
+        inline static int player2Score = 0;
 };
 
 #endif
