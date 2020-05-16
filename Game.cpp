@@ -18,6 +18,7 @@ void Game::start()
     
     InfoScreen::setInfoScreen();
     ActualGame::setActualGame();
+    GameOver::setGameOverScreen();
 
     while(running)
     {
@@ -33,17 +34,22 @@ void Game::start()
                 case sf::Event::KeyPressed:
                     if(event.key.code == sf::Keyboard::Escape)
                     {
-                        quit();
+                        if(_gameState == Game::Menu)
+                            quit();
                     }
                     else if(event.key.code == sf::Keyboard::Up)
                     {   
                         if(_gameState == Game::Menu)
                             MainMenu::moveUp();
+                        else if(_gameState == Game::OverPage)
+                            GameOver::moveUp();
                     }
                     else if(event.key.code == sf::Keyboard::Down)
                     {
                         if(_gameState == Game::Menu)
                             MainMenu::moveDown();
+                        else if(_gameState == Game::OverPage)
+                            GameOver::moveDown();
                     }
                     
                     else if(event.key.code == sf::Keyboard::Enter)
@@ -72,6 +78,20 @@ void Game::start()
                             Game::setCurrentState("MainMenu");
                             _gameState = Game::Menu;
                         }
+                        else if(_gameState == Game::OverPage)
+                        {
+                            switch(GameOver::selectedItemIndex)
+                            {
+                                case 0:
+                                    ActualGame::setStartSetup();
+                                    Game::setCurrentState("ActualGame");
+                                    _gameState = Game::Playing;
+                                    break;
+                                case 1:
+                                    quit();
+                                    break;
+                            }
+                        }
                     }
                     break;
             }
@@ -81,6 +101,13 @@ void Game::start()
         {
             ActualGame::playerUpdate();
             ActualGame::ballUpdate();
+            if((ActualGame::getPlayer1Score() == 5 || ActualGame::getPlayer2Score() == 5) && ActualGame::canOpenGameOverPage)
+            {
+                Game::addState("GameOver", new GameOver);
+                Game::setCurrentState("GameOver");
+                _gameState = Game::OverPage;
+                ActualGame::canOpenGameOverPage = false;
+            }
         }
 
         window.clear(sf::Color::Black);

@@ -29,11 +29,12 @@ void InfoScreen::setOptionText()
     option.setString("Back");
     option.setOutlineThickness(4);
     option.setFont(font);
-    option.setCharacterSize(40);
+    option.setCharacterSize(50);
     option.setFillColor(sf::Color::White);
     option.setOutlineColor(sf::Color::Black);
-    option.setOrigin(251.5, 20.5);
-    option.setPosition(WINDOW_WIDTH/2, 640);
+    sf::FloatRect textRect = option.getLocalBounds();
+    option.setOrigin(textRect.left + textRect.width/2.0f, textRect.top + textRect.height/2.0f);
+    option.setPosition(WINDOW_WIDTH/2, 650);
 }
 
 void InfoScreen::setFont(const char *name)

@@ -4,6 +4,7 @@
 #include "MainMenu.h"
 #include "InfoScreen.h"
 #include "ActualGame.h"
+#include "GameOver.h"
 
 class Game : public State
 {
@@ -19,8 +20,8 @@ class Game : public State
             Uninitialized,
             Menu,
             InfoPage,
-            Pause,
-            Playing
+            Playing,
+            OverPage
         };
 
     inline static GameState _gameState = Uninitialized;

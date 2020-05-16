@@ -3,7 +3,10 @@
 
 #define WINDOW_WIDTH 560
 #define WINDOW_HEIGHT 840
+#define SHIFT 260
+#define SCORE_SHIFT 60
 #define NUMBER_OF_ITEMS_MENU 3
-#define SPEED 5.0f
+#define NUMBER_OF_ITEMS_GAMEOVER 2
+#define SPEED 4.0f
 
 #endif

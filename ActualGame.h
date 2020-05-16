@@ -4,6 +4,10 @@
 #include "State.h"
 #include "Ball.h"
 #include "DEFINITIONS.h"
+#include <string>
+#include <iostream>
+#include <cmath>
+#include <unistd.h>
 
 class ActualGame : public State
 {
@@ -15,6 +19,13 @@ class ActualGame : public State
 
         static void ballUpdate();
         static void playerUpdate();
+
+        static int getPlayer1Score();
+        static int getPlayer2Score();
+
+        static void setStartSetup();
+
+        inline static bool canOpenGameOverPage = false;
 
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -31,6 +42,13 @@ class ActualGame : public State
         static void setAfterPlayer1Scores();
         static void setAfterPlayer2Scores();
 
+        static void setPlayerScoresMsg(sf::Text * playerText, std::string msg, float change, sf::Color color);
+        static void setPlayerScore(sf::Text * player, sf::Color color, float change);
+
+        static void updatePlayerScore(sf::Text * player, std::string score);
+
+        static void setFont(const char *name);
+
         inline static float ballVelocity = 0.0f;
         inline static sf::Vector2f velocity{ballVelocity, ballVelocity};
 
@@ -44,6 +62,16 @@ class ActualGame : public State
 
         inline static int player1Score = 0;
         inline static int player2Score = 0;
+        inline static sf::Text player1Scoretxt;
+        inline static sf::Text player2Scoretxt;
+
+        inline static sf::Font font;
+        inline static sf::Text player1ScoresMsg;
+        inline static sf::Text player2ScoresMsg;
+
+        inline static bool mark1 = false;
+        inline static bool mark2 = false;
+
 };
 
 #endif

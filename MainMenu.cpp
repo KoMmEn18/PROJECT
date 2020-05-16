@@ -61,25 +61,29 @@ sf::RectangleShape MainMenu::lineMaker()
 
 void MainMenu::setOptionText()
 {
+
     for (int i = 0; i < NUMBER_OF_ITEMS_MENU; i++)
     {
         options[i].setFont(font);
-        options[i].setCharacterSize(40);
+        options[i].setCharacterSize(50);
         options[i].setFillColor(sf::Color::White);
-        options[i].setOrigin(welcomeMessage.getLocalBounds().width / 2.0f, welcomeMessage.getLocalBounds().height / 2.0f);
         options[i].setOutlineColor(sf::Color::Black);
     }
 
     options[0].setString("Play");
-    options[0].setPosition(WINDOW_WIDTH / 2, 480);
+    sf::FloatRect textRect = options[0].getLocalBounds();
+    options[0].setOrigin(textRect.left + textRect.width/2.0f, textRect.top + textRect.height/2.0f);
+    options[0].setPosition(WINDOW_WIDTH / 2, 450);
     options[0].setOutlineThickness(4);
 
     options[1].setString("Info");
-    options[1].setPosition(WINDOW_WIDTH / 2, 560);
+    options[1].setOrigin(textRect.left + textRect.width/2.0f, textRect.top + textRect.height/2.0f);
+    options[1].setPosition(WINDOW_WIDTH / 2, 550);
     options[1].setOutlineThickness(1);
 
     options[2].setString("Exit");
-    options[2].setPosition(WINDOW_WIDTH / 2, 640);
+    options[2].setOrigin(textRect.left + textRect.width/2.0f, textRect.top + textRect.height/2.0f);
+    options[2].setPosition(WINDOW_WIDTH / 2, 650);
     options[2].setOutlineThickness(1);
 }
 

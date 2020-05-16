@@ -1,32 +1,33 @@
-#ifndef MAIN_MENU_H
-#define MAIN_MENU_H
+#ifndef GAME_OVER
+#define GAME_OVER
 
 #include "State.h"
 #include "DEFINITIONS.h"
 
-class MainMenu : public State
+class GameOver : public State
 {
     public:
-        static void setMenu();
+        static void setGameOverScreen();
+        inline static int selectedItemIndex = 0;
         static void moveUp();
         static void moveDown();
-        inline static int selectedItemIndex = 0;
 
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-        static void menuBackground();
+        static void gameOverBackground();
         static void setFont(const char *name);
-        static void setWelcomeMessage();
         static sf::RectangleShape lineMaker();
+        static void setGameOverMessage();
         static void setOptionText();
 
-    protected:
-        inline static sf::RectangleShape line = MainMenu::lineMaker();
         inline static sf::Texture textureBackground;
         inline static sf::Sprite spriteBackground;
         inline static sf::Font font;
-        inline static sf::Text welcomeMessage;
-        inline static sf::Text options[NUMBER_OF_ITEMS_MENU];
+        inline static sf::Text gameOverMessage;
+
+        inline static sf::Text options[NUMBER_OF_ITEMS_GAMEOVER];
+
+        inline static sf::RectangleShape line = GameOver::lineMaker();
 };
 
 #endif
