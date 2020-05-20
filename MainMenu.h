@@ -10,6 +10,7 @@ class MainMenu : public State
         static void setMenu();
         static void moveUp();
         static void moveDown();
+
         inline static int selectedItemIndex = 0;
 
     private:
@@ -20,7 +21,6 @@ class MainMenu : public State
         static sf::RectangleShape lineMaker();
         static void setOptionText();
 
-    protected:
         inline static sf::RectangleShape line = MainMenu::lineMaker();
         inline static sf::Texture textureBackground;
         inline static sf::Sprite spriteBackground;

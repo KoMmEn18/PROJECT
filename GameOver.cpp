@@ -1,36 +1,5 @@
 #include "GameOver.h"
 
-void GameOver::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-    target.draw(spriteBackground);
-    target.draw(gameOverMessage);
-    target.draw(line);
-
-    for (int i = 0; i < NUMBER_OF_ITEMS_GAMEOVER; i++)
-    {
-        target.draw(options[i]);
-    }
-}
-
-void GameOver::gameOverBackground()
-{
-    if(!textureBackground.loadFromFile("Sources/img/menu.jpg", sf::IntRect(600, 200,1920,1080)))
-    {
-        exit(EXIT_FAILURE);
-    }
-    textureBackground.setSmooth(true);
-
-    spriteBackground.setTexture(textureBackground);
-}
-
-void GameOver::setFont(const char *name)
-{
-    if(!GameOver::font.loadFromFile(name))
-    {
-        exit(EXIT_FAILURE);
-    }
-}
-
 void GameOver::setGameOverScreen()
 {
     GameOver::gameOverBackground();
@@ -59,6 +28,54 @@ void GameOver::moveDown()
     }
 }
 
+void GameOver::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    target.draw(spriteBackground);
+    target.draw(gameOverMessage);
+    target.draw(line);
+
+    for (sf::Text& i : options)
+    {
+        target.draw(i);
+    }
+}
+
+void GameOver::gameOverBackground()
+{
+    try
+    {
+        if(!textureBackground.loadFromFile("Sources/img/menu.jpg", sf::IntRect(600, 200,1920,1080)))
+        {
+            throw "Texture background loading failed!";
+        }
+    }
+    catch(...)
+    {
+        perror("Texture background loading failed!");
+        exit(EXIT_FAILURE);
+    }
+
+    textureBackground.setSmooth(true);
+
+    spriteBackground.setTexture(textureBackground);
+}
+
+void GameOver::setFont(const char *name)
+{
+    try
+    {
+        if (!font.loadFromFile(name))
+        {
+            throw "Font loading failed!";
+        }
+    }
+    catch(...)
+    {
+        perror("Font loading failed!");
+        exit(EXIT_FAILURE);
+    }
+}
+
 sf::RectangleShape GameOver::lineMaker()
 {
     sf::RectangleShape line(sf::Vector2f(350.f, 3.f));
@@ -80,12 +97,12 @@ void GameOver::setGameOverMessage()
 
 void GameOver::setOptionText()
 {
-    for (int i = 0; i < NUMBER_OF_ITEMS_GAMEOVER; i++)
+    for (sf::Text& i : options)
     {
-        options[i].setFont(font);
-        options[i].setCharacterSize(50);
-        options[i].setFillColor(sf::Color::White);
-        options[i].setOutlineColor(sf::Color::Black);
+        i.setFont(font);
+        i.setCharacterSize(50);
+        i.setFillColor(sf::Color::White);
+        i.setOutlineColor(sf::Color::Black);
     }
 
     options[0].setString("Play Again");

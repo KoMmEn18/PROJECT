@@ -7,6 +7,7 @@
 #define SCORE_SHIFT 60
 #define NUMBER_OF_ITEMS_MENU 3
 #define NUMBER_OF_ITEMS_GAMEOVER 2
+#define NUMBER_OF_LINES 8
 #define SPEED 4.0f
 
 #endif

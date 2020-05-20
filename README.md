@@ -1,3 +1,3 @@
 # AIR HOCKEY CLONE
 
-Jest to praca jaką udało mi się wykonać do tej pory.
+Ukończona gra. Do poruszania sie w MENU uzywamy strzalek Up i Down na klawiaturze

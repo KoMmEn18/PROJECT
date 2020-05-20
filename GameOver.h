@@ -8,9 +8,10 @@ class GameOver : public State
 {
     public:
         static void setGameOverScreen();
-        inline static int selectedItemIndex = 0;
         static void moveUp();
         static void moveDown();
+
+        inline static int selectedItemIndex = 0;
 
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -24,9 +25,7 @@ class GameOver : public State
         inline static sf::Sprite spriteBackground;
         inline static sf::Font font;
         inline static sf::Text gameOverMessage;
-
         inline static sf::Text options[NUMBER_OF_ITEMS_GAMEOVER];
-
         inline static sf::RectangleShape line = GameOver::lineMaker();
 };
 

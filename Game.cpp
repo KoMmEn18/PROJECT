@@ -9,7 +9,7 @@ void Game::start()
     _gameState = Game::Menu;
     running = true;
 
-    window.create(sf::VideoMode(WINDOW_WIDTH,WINDOW_HEIGHT), "Ice Hockey");
+    window.create(sf::VideoMode(WINDOW_WIDTH,WINDOW_HEIGHT), "Hockey Game");
     window.setFramerateLimit(60);
     window.setPosition(sf::Vector2i(1920/2 - WINDOW_WIDTH/2 , 1080/2 - WINDOW_HEIGHT/2));
 

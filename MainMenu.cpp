@@ -1,18 +1,6 @@
 #include <iostream>
 #include "MainMenu.h"
 
-void MainMenu::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-    target.draw(spriteBackground);
-    target.draw(welcomeMessage);
-    target.draw(line);
-
-    for (int i = 0; i < NUMBER_OF_ITEMS_MENU; i++)
-    {
-        target.draw(options[i]);
-    }
-}
-
 void MainMenu::setMenu()
 {
     MainMenu::menuBackground();
@@ -21,12 +9,53 @@ void MainMenu::setMenu()
     MainMenu::setOptionText();
 }
 
+void MainMenu::moveUp()
+{
+    if (MainMenu::selectedItemIndex - 1 >= 0)
+    {
+        options[selectedItemIndex].setOutlineThickness(1);
+        selectedItemIndex--;
+        options[selectedItemIndex].setOutlineThickness(4);
+    }
+}
+
+void MainMenu::moveDown()
+{
+    if (MainMenu::selectedItemIndex + 1 < NUMBER_OF_ITEMS_MENU)
+    {
+        options[selectedItemIndex].setOutlineThickness(1);
+        selectedItemIndex++;
+        options[selectedItemIndex].setOutlineThickness(4);
+    }
+}
+
+void MainMenu::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    target.draw(spriteBackground);
+    target.draw(welcomeMessage);
+    target.draw(line);
+
+    for (sf::Text& i : options)
+    {
+        target.draw(i);
+    }
+}
+
 void MainMenu::menuBackground()
 {
-    if (!textureBackground.loadFromFile("Sources/img/menu.jpg", sf::IntRect(600, 200, 1920, 1080)))
+    try
     {
+        if (!textureBackground.loadFromFile("Sources/img/menu.jpg", sf::IntRect(600, 200, 1920, 1080)))
+        {
+            throw "Texture background loading failed!";
+        }
+    }
+    catch(...)
+    {
+        perror("Texture background loading failed!");
         exit(EXIT_FAILURE);
     }
+    
     textureBackground.setSmooth(true);
 
     spriteBackground.setTexture(textureBackground);
@@ -34,10 +63,20 @@ void MainMenu::menuBackground()
 
 void MainMenu::setFont(const char *name)
 {
-    if (!font.loadFromFile(name))
+
+    try
     {
+        if (!font.loadFromFile(name))
+        {
+            throw "Font loading failed!";
+        }
+    }
+    catch(...)
+    {
+        perror("Font loading failed!");
         exit(EXIT_FAILURE);
     }
+
 }
 
 void MainMenu::setWelcomeMessage()
@@ -61,13 +100,12 @@ sf::RectangleShape MainMenu::lineMaker()
 
 void MainMenu::setOptionText()
 {
-
-    for (int i = 0; i < NUMBER_OF_ITEMS_MENU; i++)
+    for(sf::Text& i : options)
     {
-        options[i].setFont(font);
-        options[i].setCharacterSize(50);
-        options[i].setFillColor(sf::Color::White);
-        options[i].setOutlineColor(sf::Color::Black);
+        i.setFont(font);
+        i.setCharacterSize(50);
+        i.setFillColor(sf::Color::White);
+        i.setOutlineColor(sf::Color::Black);
     }
 
     options[0].setString("Play");
@@ -85,24 +123,4 @@ void MainMenu::setOptionText()
     options[2].setOrigin(textRect.left + textRect.width/2.0f, textRect.top + textRect.height/2.0f);
     options[2].setPosition(WINDOW_WIDTH / 2, 650);
     options[2].setOutlineThickness(1);
-}
-
-void MainMenu::moveUp()
-{
-    if (MainMenu::selectedItemIndex - 1 >= 0)
-    {
-        options[selectedItemIndex].setOutlineThickness(1);
-        selectedItemIndex--;
-        options[selectedItemIndex].setOutlineThickness(4);
-    }
-}
-
-void MainMenu::moveDown()
-{
-    if (MainMenu::selectedItemIndex + 1 < NUMBER_OF_ITEMS_MENU)
-    {
-        options[selectedItemIndex].setOutlineThickness(1);
-        selectedItemIndex++;
-        options[selectedItemIndex].setOutlineThickness(4);
-    }
 }
