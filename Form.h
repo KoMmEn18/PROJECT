@@ -1,9 +1,9 @@
 #ifndef FORM_H
 #define FORM_H
 
-#include "State.h"
+#include <SFML/Graphics.hpp>
 
-class Form : public State
+class Form : public sf::Drawable
 {
     public:
         virtual void update(sf::Vector2f howmany) = 0;
